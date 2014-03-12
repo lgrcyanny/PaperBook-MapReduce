@@ -49,9 +49,13 @@ Installation
   $ create 'pb_index_authors', 'info'
   $ create 'pb_index_publication', 'info'
 ```
-8.Run MapReduce jobs in eclipse<BR>
-InvertedIndexTitle.java
-InvertedIndexAuthors.java
-InvertedIndexPublication.java
-InvertedIndexYear.java
+8.Import random data into hbase<BR>
+We import 20000 literature into hbase, please run com.paperbook.batchimport.LiteratureGenerator.java
+
+9.Run MapReduce jobs in eclipse<BR>
+com.paperbook.mapreduce.InvertedIndexTitle.java<BR>
+com.paperbook.mapreduce.InvertedIndexAuthors.java<BR>
+com.paperbook.mapreduce.InvertedIndexPublication.java<BR>
+com.paperbook.mapreduce.InvertedIndexYear.java<BR>
+
 
