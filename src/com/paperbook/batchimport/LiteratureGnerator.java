@@ -22,6 +22,8 @@ public class LiteratureGnerator {
 	public static ArrayList<String> publications = new ArrayList<String>();
 	public static ArrayList<String> users = new ArrayList<String>();
 	public ArrayList<Put> putlist = new ArrayList<Put>();
+	public int dicStartIndex = 0;
+	private int runTimeIndex = 0;
 	
 	public static class Word {
 		public String value;
@@ -83,6 +85,23 @@ public class LiteratureGnerator {
 		return res.toString();
 	}
 	
+	public void testGetTitle() {
+		long startTime = System.currentTimeMillis();
+		for (int i = 0; i < 20000; i++) {
+			System.out.println(getRandomTitle());
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.println("The running time is = " + (endTime - startTime));
+		int count = 0;;
+		for (int i = 0; i < dictionary.size(); i++) {
+			if (dictionary.get(i).count != 50) {
+				System.out.println(dictionary.get(i).value + "=" + dictionary.get(i).count);
+				count++;
+			}
+		}
+		System.out.println("count = " + count);
+	}
+	
 	private String getRandomPublication() {
 		int index = random(0, 49);
 		return publications.get(index);
@@ -111,17 +130,22 @@ public class LiteratureGnerator {
 		StringBuilder res = new StringBuilder();
 		int count = random(2, 10);
 		while (count > 0) {
-			int index = random(0, 1999);
-			Word word = dictionary.get(index);
-			if (word.count <= 50 && res.indexOf(word.value) == -1) {
-				res.append(word.value);
-				if (count > 1) {
-					res.append(" ");
-				}
-				count--;
+			if (runTimeIndex >= dictionary.size()) {
+				dictionary.add(dictionary.remove(dicStartIndex));
+				runTimeIndex = dicStartIndex;
 			}
+			//System.out.println("dicStartIndex = "+ dicStartIndex);
+//			if (dictionary.get(runTimeIndex).count >= 50) {
+//				runTimeIndex++;
+//			} else {
+				res.append(dictionary.get(runTimeIndex).value + " ");
+				dictionary.get(runTimeIndex).count++;
+				count--;
+				runTimeIndex++;
+//			}			
 		}
-		return res.toString();
+		
+		return res.toString().trim();
 	}
 	
 	private String getRandomUser() {
@@ -164,14 +188,17 @@ public class LiteratureGnerator {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Configuration conf = HBaseConfiguration.create();
-		HTableInterface literaturesTable = new HTable(conf, "pb_literatures");
-		LiteratureGnerator generator = new LiteratureGnerator();
-		long startTime = System.currentTimeMillis();
-		ArrayList<Put> putList = generator.createLiteratures(20000);
-		literaturesTable.put(putList);
-		long endTime = System.currentTimeMillis();
-		literaturesTable.close();
-		System.out.println("Running time is " + (endTime - startTime));	
+//		Configuration conf = HBaseConfiguration.create();
+//		HTableInterface literaturesTable = new HTable(conf, "pb_literatures");
+		//LiteratureGnerator generator = new LiteratureGnerator();
+//		long startTime = System.currentTimeMillis();
+//		ArrayList<Put> putList = generator.createLiteratures(20000);
+//		literaturesTable.put(putList);
+//		long endTime = System.currentTimeMillis();
+//		literaturesTable.close();
+//		System.out.println("Running time is " + (endTime - startTime));	
+//		new LiteratureGnerator().testGetTitle();
+		
+		System.out.println(new Integer(3).hashCode());
 	}
 }
