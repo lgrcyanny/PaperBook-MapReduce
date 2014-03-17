@@ -1,4 +1,4 @@
-package com.paperbook.mapreduce;
+package com.paperbook.mapreduce.invertedindex;
 
 import java.io.IOException;
 import java.util.Iterator;

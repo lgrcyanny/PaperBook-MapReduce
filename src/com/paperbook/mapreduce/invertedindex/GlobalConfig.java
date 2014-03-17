@@ -1,4 +1,4 @@
-package com.paperbook.mapreduce;
+package com.paperbook.mapreduce.invertedindex;
 
 public class GlobalConfig {
 	public static final String TBL_LITERATURES = "pb_literatures";
