@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Hashtable;
+
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -15,9 +15,8 @@ import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import com.jcraft.jsch.jce.MD5;
 
-public class LiteratureGnerator {
+public class LiteratureGnerator1 {
 	public static ArrayList<Word> dictionary = new ArrayList<Word>();
 	public static ArrayList<String> publications = new ArrayList<String>();
 	public static ArrayList<String> users = new ArrayList<String>();
@@ -34,7 +33,7 @@ public class LiteratureGnerator {
 		}		
 	}
 	
-	public LiteratureGnerator() {
+	public LiteratureGnerator1() {
 		this.initDictionary();
 		this.initPublications();
 		this.initUsers();
@@ -87,7 +86,7 @@ public class LiteratureGnerator {
 	
 	public void testGetTitle() {
 		long startTime = System.currentTimeMillis();
-		for (int i = 0; i < 20000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			System.out.println(getRandomTitle());
 		}
 		long endTime = System.currentTimeMillis();
@@ -188,17 +187,17 @@ public class LiteratureGnerator {
 	}
 	
 	public static void main(String[] args) throws IOException {
-//		Configuration conf = HBaseConfiguration.create();
-//		HTableInterface literaturesTable = new HTable(conf, "pb_literatures");
-		//LiteratureGnerator generator = new LiteratureGnerator();
-//		long startTime = System.currentTimeMillis();
-//		ArrayList<Put> putList = generator.createLiteratures(20000);
-//		literaturesTable.put(putList);
-//		long endTime = System.currentTimeMillis();
-//		literaturesTable.close();
-//		System.out.println("Running time is " + (endTime - startTime));	
+		Configuration conf = HBaseConfiguration.create();
+		HTableInterface literaturesTable = new HTable(conf, "pb_literatures");
+		LiteratureGnerator1 generator = new LiteratureGnerator1();
+		long startTime = System.currentTimeMillis();
+		ArrayList<Put> putList = generator.createLiteratures(20000);
+		literaturesTable.put(putList);
+		long endTime = System.currentTimeMillis();
+		literaturesTable.close();
+		System.out.println("Running time is " + (endTime - startTime));	
 //		new LiteratureGnerator().testGetTitle();
 		
-		System.out.println(new Integer(3).hashCode());
+		//System.out.println(new Integer(3).hashCode());
 	}
 }
