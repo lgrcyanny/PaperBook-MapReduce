@@ -39,11 +39,13 @@ public class CommentsStat {
 				throws IOException, InterruptedException {
 			int countWeek = 0;
 			int countMonth = 0;
+			int countHalfYear = 0;
 			int countYear = 0;
 			int countTotal = 0;
 			long tsWeek = System.currentTimeMillis() - (long) 3600 * 1000 * 24 * 7;
 			long tsMonth = System.currentTimeMillis() - (long) 3600 * 1000 * 24 * 30;
 			long tsYear = System.currentTimeMillis() - (long) 3600 * 1000 * 24 * 365;
+			long tsHalftYear = System.currentTimeMillis() - (long) 3600 * 1000 * 24 * 182;
 			
 			Iterator<LongWritable> iterator = timestamps.iterator();
 			while (iterator.hasNext()) {
@@ -51,6 +53,9 @@ public class CommentsStat {
 				countTotal++;
 				if (time > tsYear) {
 					countYear++;
+				}
+				if (time > tsHalftYear) {
+					countHalfYear++;
 				}
 				if (time > tsMonth) {
 					countMonth++;
@@ -64,9 +69,11 @@ public class CommentsStat {
 			put.add(Bytes.toBytes("info"), Bytes.toBytes("week"), Bytes.toBytes(String.valueOf(countWeek)));
 			put.add(Bytes.toBytes("info"), Bytes.toBytes("month"), Bytes.toBytes(String.valueOf(countMonth)));
 			put.add(Bytes.toBytes("info"), Bytes.toBytes("year"), Bytes.toBytes(String.valueOf(countYear)));
+			put.add(Bytes.toBytes("info"), Bytes.toBytes("halfyear"), Bytes.toBytes(String.valueOf(countHalfYear)));
 			put.add(Bytes.toBytes("info"), Bytes.toBytes("total"), Bytes.toBytes(String.valueOf(countTotal)));
 			
 			context.write(null, put);
+		
 		}
 	}
 	
@@ -85,7 +92,15 @@ public class CommentsStat {
 		TableMapReduceUtil.initTableReducerJob("pb_stat_comments",
 				StatReducer.class, job);
 		job.setNumReduceTasks(1);  // At least one reducer, adjust as required
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		
+		long start = System.currentTimeMillis();
+		boolean res = job.waitForCompletion(true);
+		long end = System.currentTimeMillis();
+		if (res) {
+			System.out.println("Job done with time " + (end - start));
+		} else {
+			throw new IOException("Job exit with error.");
+		}
 	}
 
 }

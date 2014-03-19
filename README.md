@@ -3,7 +3,7 @@ PaperBook-MapReduce
 
 Build MapReduce Job for PaperBook, like inverted index for search, statistics
 
-Requirements
+Requirements For Inverted Index
 ============
 1. Generate 20000 literature records randomly, and insert them into HBase<BR>
 The strategy is: <br>
@@ -18,7 +18,7 @@ The strategy is: <br>
 2.Use map reduce job to generate inverted index table in hbase to improve search
 
 
-Installation
+Installation for Inverted Index
 ===========
 1. Please install Hadoop 2.2.0 and HBase 0.96.1
 2. git clone https://github.com/lgrcyanny/PaperBook-MapReduce
@@ -57,5 +57,35 @@ com.paperbook.mapreduce.InvertedIndexTitle.java<BR>
 com.paperbook.mapreduce.InvertedIndexAuthors.java<BR>
 com.paperbook.mapreduce.InvertedIndexPublication.java<BR>
 com.paperbook.mapreduce.InvertedIndexYear.java<BR>
+
+Configure for Statistics
+==========================
+1.create table in HBase<br>
+```sh
+  $ hbase shell
+  $ create 'pb_mr_literatures', 'info'
+  $ create 'pb_mr_literatures_repeat', 'info'
+  $ create 'pb_mr_comments', 'info'
+  $ create 'pb_stat_comments', 'info'
+  $ create 'pb_stat_literatures', 'info'
+  $ create 'pb_stat_comments_count', 'info'
+```
+
+2.Import data
+run BatchJob.java import 100000 literatures and roughly 1380000 comments<BR>
+run BatchJobRepeatLiteratures.java to import 100000 literatures and roughly 350 repeat records<BR>
+
+3.Run mapreduce jobs<BR>
+LiteraturesStat.java<BR>
+CommentsStat.java<BR>
+CommentsCount.java<BR>
+SecondarySort.java<BR>
+LiteratureRepeatCount.java<BR>
+
+
+
+
+
+
 
 

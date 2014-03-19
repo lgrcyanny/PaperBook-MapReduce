@@ -105,7 +105,15 @@ public class CommentsCount {
 		TableMapReduceUtil.initTableReducerJob("pb_stat_comments_count",
 				CountReducer.class, job);
 		job.setNumReduceTasks(1);  // At least one reducer, adjust as required
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		
+		long start = System.currentTimeMillis();
+		boolean res = job.waitForCompletion(true);
+		long end = System.currentTimeMillis();
+		if (res) {
+			System.out.println("Job done with time " + (end - start));
+		} else {
+			throw new IOException("Job exit with error.");
+		}
 	}
 
 }

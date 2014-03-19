@@ -67,7 +67,7 @@ public class LiteratureGenerator {
 			int count = Utils.random(2, 5);
 			for (int j = 0; j < count; j++) {
 				long timestamp = Utils.getRandomTimeStamp(item.year);
-				Put put = new Put(Bytes.toBytes(Utils.md5(item.title + System.currentTimeMillis())));
+				Put put = new Put(Bytes.toBytes(Utils.md5(item.title + System.currentTimeMillis() + timestamp)));
 				put.add(Bytes.toBytes("info"), Bytes.toBytes("title"), timestamp, Bytes.toBytes(item.title));
 				put.add(Bytes.toBytes("info"), Bytes.toBytes("authors"), timestamp, Bytes.toBytes(item.authors));
 				put.add(Bytes.toBytes("info"), Bytes.toBytes("year"), timestamp, Bytes.toBytes(String.valueOf(item.year)));
