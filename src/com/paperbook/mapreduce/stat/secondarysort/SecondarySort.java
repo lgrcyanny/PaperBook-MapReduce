@@ -15,11 +15,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-import com.sun.org.apache.commons.logging.Log;
-import com.sun.org.apache.commons.logging.LogFactory;
 
 public class SecondarySort {
 
@@ -77,8 +73,8 @@ public class SecondarySort {
 
 		// For secondary sort
 		job.setSortComparatorClass(CompositeKeyComparator.class);
-		job.setPartitionerClass(NatualKeyPartitioner.class);
-		job.setGroupingComparatorClass(NatualKeyGroupComparator.class);
+		job.setPartitionerClass(NaturalKeyPartitioner.class);
+		job.setGroupingComparatorClass(NaturalKeyGroupComparator.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);

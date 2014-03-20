@@ -3,9 +3,9 @@ package com.paperbook.mapreduce.stat.secondarysort;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
-public class NatualKeyGroupComparator extends WritableComparator {
+public class NaturalKeyGroupComparator extends WritableComparator {
 
-	public NatualKeyGroupComparator() {
+	public NaturalKeyGroupComparator() {
 		super(SortKeyPair.class, true);
 	}
 
