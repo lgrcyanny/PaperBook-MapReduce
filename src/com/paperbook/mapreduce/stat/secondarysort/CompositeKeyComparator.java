@@ -9,9 +9,6 @@ public class CompositeKeyComparator extends WritableComparator{
 		super(SortKeyPair.class, true);
 	}
 	
-	/**
-	 * a is a text = "count,avgts", avgts(average timestamp)
-	 */
 	@Override
 	public int compare(WritableComparable a, WritableComparable b) {
 		SortKeyPair s1 = (SortKeyPair)a;

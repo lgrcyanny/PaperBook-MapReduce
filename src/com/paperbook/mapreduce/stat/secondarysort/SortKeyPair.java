@@ -55,7 +55,7 @@ public class SortKeyPair implements WritableComparable<SortKeyPair> {
 	}
 
 	/**
-	 * We want sort in desending count and desending avgts
+	 * We want sort in descending count and descending avgts
 	 */
 	@Override
 	public int compareTo(SortKeyPair o) {
@@ -73,6 +73,7 @@ public class SortKeyPair implements WritableComparable<SortKeyPair> {
 	@Override
 	public int hashCode() {
 		return Integer.MAX_VALUE - this.count;
+		//return this.count;
 	}
 
 	@Override
