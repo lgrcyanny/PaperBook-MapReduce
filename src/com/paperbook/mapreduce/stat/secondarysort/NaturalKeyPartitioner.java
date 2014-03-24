@@ -7,7 +7,7 @@ public class NaturalKeyPartitioner extends Partitioner<SortKeyPair, Text>{
 
 	@Override
 	public int getPartition(SortKeyPair key, Text value, int numPartitions) {
-		// % is hash partition, can't gurantee bigger count go to reducer with small id.
+		// % is hash partition, can't make sure bigger count go to reducer with small id.
 		int count = key.getCount();
 		if (count <= 5) {
 			return 0;
