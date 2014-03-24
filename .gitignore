@@ -4,3 +4,7 @@
 .project
 .settings/
 *-res/*
+*test/*
+titles.txt
+test-title.txt
+*.csv

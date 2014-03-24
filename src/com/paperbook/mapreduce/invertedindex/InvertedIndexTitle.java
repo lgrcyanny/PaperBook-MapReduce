@@ -58,6 +58,14 @@ public class InvertedIndexTitle {
 				null, job);
 		job.setNumReduceTasks(0); // There is no need of Reducer, HBase is the
 									// reduer
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		
+		long start = System.currentTimeMillis();
+		boolean res = job.waitForCompletion(true);
+		long end = System.currentTimeMillis();
+		if (res) {
+			System.out.println("Job done with time " + (end - start));
+		} else {
+			throw new IOException("Job exit with error.");
+		}
 	}
 }

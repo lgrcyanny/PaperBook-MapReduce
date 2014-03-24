@@ -159,6 +159,7 @@ public class LiteratureGnerator1 {
 			while ((line = buffer.readLine()) != null) {
 				dictionary.add(new Word(line));
 			}
+			buffer.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,6 +173,7 @@ public class LiteratureGnerator1 {
 			while ((line = buffer.readLine()) != null) {
 				publications.add(line);
 			}
+			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -196,8 +198,5 @@ public class LiteratureGnerator1 {
 		long endTime = System.currentTimeMillis();
 		literaturesTable.close();
 		System.out.println("Running time is " + (endTime - startTime));	
-//		new LiteratureGnerator().testGetTitle();
-		
-		//System.out.println(new Integer(3).hashCode());
 	}
 }

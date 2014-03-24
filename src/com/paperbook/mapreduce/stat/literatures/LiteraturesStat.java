@@ -87,7 +87,7 @@ public class LiteraturesStat {
 				Bytes.toBytes("user"));
 		scan.setCaching(5000); // Default is 1, set 500 improve performance
 		scan.setCacheBlocks(false); // Close block cache for MR job
-		TableMapReduceUtil.initTableMapperJob("pb_mr_literatures",
+		TableMapReduceUtil.initTableMapperJob("pb_literatures",
 				scan, StatMapper.class, Text.class,
 				LongWritable.class, job);
 		TableMapReduceUtil.initTableReducerJob("pb_stat_literatures",

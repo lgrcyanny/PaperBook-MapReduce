@@ -1,8 +1,11 @@
 package com.paperbook.batchimport2;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -15,7 +18,7 @@ public class LiteratureGenerator {
 	public ArrayList<Word> dictionary = new ArrayList<Word>();
 	public ArrayList<String> publications = new ArrayList<String>();
 	public ArrayList<User> userlist = new ArrayList<User>();
-	public ArrayList<Literature> literatures = new ArrayList<Literature>(100000);
+	public ArrayList<Literature> literatures = new ArrayList<Literature>(1000000);
 	private int dicRunTimeIndex = 0; // Index for random title, record the run time index
 	private int userlistIndex = 0; // Index for random user
 	
@@ -41,7 +44,7 @@ public class LiteratureGenerator {
 	}
 	
 	public ArrayList<Put> createPutList () {
-		ArrayList<Put> putlist = new ArrayList<Put>(100000);
+		ArrayList<Put> putlist = new ArrayList<Put>(1000000);
 		for (int i = 0; i < literatures.size(); i++) {
 			Literature item = literatures.get(i);
 			Put put = new Put(Bytes.toBytes(item.rowkey));
@@ -53,6 +56,18 @@ public class LiteratureGenerator {
 			putlist.add(put);
 		}	
 		return putlist;
+	}
+	
+	public void createCSVFile () {
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("resources/literatures.csv", true)));
+			for (int i = 0; i < literatures.size(); i++) {
+				out.println(literatures.get(i).toString());
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Put> createRandomRepeatPutList () {
@@ -168,6 +183,7 @@ public class LiteratureGenerator {
 			while ((line = buffer.readLine()) != null) {
 				dictionary.add(new Word(line));
 			}
+			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -180,6 +196,7 @@ public class LiteratureGenerator {
 			while ((line = buffer.readLine()) != null) {
 				publications.add(line);
 			}
+			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -192,6 +209,7 @@ public class LiteratureGenerator {
 			while ((line = buffer.readLine()) != null) {
 				userlist.add(new User(line.trim()));
 			}
+			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

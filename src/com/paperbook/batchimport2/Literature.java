@@ -19,5 +19,12 @@ public class Literature {
 		this.publication = publication;
 		this.user = user;
 		this.timestamp = timestamp;
+	}
+
+	@Override
+	public String toString() {
+		return title + "," + authors + "," + year + "," + publication + "," + "Journal" + "," + "1";
 	}	
+	
+	
 }
